@@ -4,18 +4,23 @@
  */
 package batalhanaval;
 
+import java.awt.Dimension;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 /**
  *
  * @author kenji
  */
 public class BatalhaNaval {
-
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        MainPage main = new MainPage();
+        //Game game = new Game();
+        TelaInicial telaInicial = new TelaInicial();
+        
+        telaInicial.run();
     }
     
 }
