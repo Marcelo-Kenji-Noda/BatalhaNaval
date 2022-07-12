@@ -36,35 +36,49 @@ public class Casa extends JComponent{
         this.xPos = x;
         this.yPos = y;
         this.tipoCasa = tipoCasa;
-
+        this.setSize(20,20);
+        this.setVisible(true);
     }
     
-    @Override
-    protected void paintComponent(Graphics g){
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        
-        g.setColor(new Color(144, 143, 208));
-        
-        // Draw the red rectangle
-        /*
-        Stroke stroke1 = new BasicStroke(6f);
- 
-        g2d.setColor(Color.BLACK);
-        g2d.setStroke(stroke1);
-        */
-        
-        g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-        System.out.println(this.getX()+" "+this.getY());
-        /*
-        g2.drawRect(xPos*tamanhoCasa, yPos*tamanhoCasa, tamanhoCasa, tamanhoCasa);
-        */
-        
-        //g2.setColor(new Color(204, 203, 244));
-        //(204, 203, 244)
-        //g2.fillRect(xPos*tamanhoCasa, yPos*tamanhoCasa, tamanhoCasa, tamanhoCasa);
-        //g2.setColor(Color.BLUE);
-        // Draw the blue rectangle
-        //g2.draw(new Rectangle2D.Double(150, 50, 200, 250));
+    public Casa(int x, int y) {
+        this.xPos = x;
+        this.yPos = y;
+        this.tipoCasa = TipoDeCasa.MAR;
     }
+    public void setTipoDeCasa(TipoDeCasa tipodeCasa){
+        this.tipoCasa = tipodeCasa;
+    }
+    
+    public void setCasa(int x, int y){
+        this.xPos = x;
+        this.yPos = y;
+    }
+    
+    public int getXPos(){
+        return this.xPos;
+    };
+    
+    public int getYPos(){
+        return this.yPos;
+    };
+    
+    public TipoDeCasa getTipoDeCasa(){
+        return this.tipoCasa;
+    }
+    
+    public Color getColor(){
+        Color current_color;
+        
+        if (this.tipoCasa == TipoDeCasa.ACERTO){
+           current_color = new Color(228,83,83);          
+        }else if(this.tipoCasa == TipoDeCasa.ERRO){
+           current_color = new Color(129,129,129);            
+        }else if(this.tipoCasa == TipoDeCasa.NAVIO){
+           current_color = new Color(248,198,72);            
+        }else{
+            current_color = new Color(204, 203, 244);     
+        }
+        
+        return current_color;
+    }     
 }

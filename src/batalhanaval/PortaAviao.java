@@ -16,4 +16,12 @@ public class PortaAviao extends Navio{
     public PortaAviao(){
         super(5);
     }
+    public PortaAviao(Navio navio){
+        super(5 ,navio.getCasaInicial(), navio.getJogador(), navio.getOrientacao());
+    }
+    
+    @Override
+    public String toString(){
+        return "Porta Avião";
+    }
 }

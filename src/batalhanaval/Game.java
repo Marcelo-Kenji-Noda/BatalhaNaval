@@ -26,11 +26,7 @@ public class Game implements Runnable{
         layout = new FlowLayout();
         //telaInicial = new TelaInicial();
         gameWindow = new JFrame();
-                //JFrame Configs
-
-        Tabuleiro tabuleiro_test = new Tabuleiro();
-        
-        gameWindow.add(tabuleiro_test);
+                //JFrame Configs 
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameWindow.setSize(new Dimension(800,800));
         gameWindow.setResizable(false);

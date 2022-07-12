@@ -17,4 +17,13 @@ public class ContraTorpedeiro extends Navio{
     public ContraTorpedeiro(){
         super(3);
     }
+    
+    public ContraTorpedeiro(Navio navio){
+        super(3 ,navio.getCasaInicial(), navio.getJogador(), navio.getOrientacao());
+    }
+    
+    @Override
+    public String toString(){
+        return "Contra Torpedeiro";
+    }
 }

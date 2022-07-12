@@ -38,6 +38,7 @@ public class TelaInicial implements Runnable{
         singlePlayerButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                /*Inicia a fase de preparação e feecha a tela inicial*/
                 PreparationPhase prepPhase = new PreparationPhase(1, 0);
                 telaInicial.dispose();
                 prepPhase.run();

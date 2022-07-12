@@ -41,8 +41,23 @@ public class Navio {
         this.orientacao = orientacao;
     }
 
-    
     public boolean posValida(){
         return true;
+    }
+
+    public int getTamanho() {
+        return tamanho;
+    }
+
+    public Casa getCasaInicial() {
+        return casaInicial;
+    }
+
+    public Jogador getJogador() {
+        return jogador;
+    }
+
+    public Orientacao getOrientacao() {
+        return orientacao;
     }
 }

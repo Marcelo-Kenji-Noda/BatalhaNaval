@@ -16,4 +16,12 @@ public class Submarino extends Navio{
     public Submarino(){
         super(2);
     }
+    public Submarino(Navio navio){
+        super(2 ,navio.getCasaInicial(), navio.getJogador(), navio.getOrientacao());
+    }
+    
+    @Override
+    public String toString(){
+        return "Submarino";
+    }
 }

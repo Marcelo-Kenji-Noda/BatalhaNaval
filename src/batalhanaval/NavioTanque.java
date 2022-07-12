@@ -17,4 +17,13 @@ public class NavioTanque extends Navio{
     public NavioTanque(){
         super(4);
     }
+    
+    public NavioTanque(Navio navio){
+        super(4 ,navio.getCasaInicial(), navio.getJogador(), navio.getOrientacao());
+    }
+    
+    @Override
+    public String toString(){
+        return "Navio Tanque";
+    }
 }
