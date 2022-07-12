@@ -33,12 +33,14 @@ public class TelaInicial implements Runnable{
         singlePlayerButton = new JButton("Single Player");
         multiPlayerButton = new JButton("Multi player");
         quitButton = new JButton("Sair");
-        
+               
         //Button Actions
         singlePlayerButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                PreparationPhase prepPhase = new PreparationPhase(1, 0);
                 telaInicial.dispose();
+                prepPhase.run();
             }  
         });
         multiPlayerButton.addActionListener(new ActionListener(){
@@ -60,15 +62,15 @@ public class TelaInicial implements Runnable{
         buttonPanel.add(quitButton);
         
         buttonPanel.setLayout(new GridLayout(3,1));
-        buttonPanel.setBorder(new EmptyBorder(10,10,10,10));
+        buttonPanel.setBorder(new EmptyBorder(100,100,100,100));
         
         //JFrame Configs
         telaInicial.add(buttonPanel);
         telaInicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        telaInicial.setSize(new Dimension(400,200));
+        telaInicial.setSize(new Dimension(500,500));
         telaInicial.setResizable(false);
         telaInicial.setVisible(true);
-        telaInicial.pack();
+        //telaInicial.pack();
         
     }
     

@@ -13,4 +13,7 @@ public class PortaAviao extends Navio{
     public PortaAviao(int tamanho, Casa casaInicial, Jogador jogador, Orientacao orientacao){
         super(5 ,casaInicial, jogador, orientacao);
     }
+    public PortaAviao(){
+        super(5);
+    }
 }

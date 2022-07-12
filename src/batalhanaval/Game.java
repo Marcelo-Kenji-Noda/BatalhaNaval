@@ -24,12 +24,20 @@ public class Game implements Runnable{
     
     public Game(){
         layout = new FlowLayout();
-        telaInicial = new TelaInicial();
+        //telaInicial = new TelaInicial();
+        gameWindow = new JFrame();
+                //JFrame Configs
+
+        Tabuleiro tabuleiro_test = new Tabuleiro();
         
+        gameWindow.add(tabuleiro_test);
+        gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameWindow.setSize(new Dimension(800,800));
+        gameWindow.setResizable(false);
+        gameWindow.setVisible(true);
+        //gameWindow.pack();
         
-        /*gameWindow.add(telaInicial);*/
-        layout.setAlignment(FlowLayout.CENTER);
-        telaInicial.run();
+        //layout.setAlignment(FlowLayout.CENTER);
     }
     
     @Override

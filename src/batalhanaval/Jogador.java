@@ -14,8 +14,10 @@ public class Jogador {
     private NaviosEmJogo naviosEmJogo;
     private int tipoJogador;
     
-    public void Jogador(){
+    public Jogador(int id){
         //tabuleiro = new Tabuleiro();
+        //Tipo de Jogador refere-se se é player ou computador
+        this.id = id;
         naviosEmJogo = new NaviosEmJogo();
         tipoJogador = 1;
     }

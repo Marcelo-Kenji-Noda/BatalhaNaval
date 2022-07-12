@@ -20,7 +20,10 @@ public class Navio {
         this.jogador = jogador;
         this.orientacao = orientacao;
     }
-
+    
+    public Navio(int tamanho){
+        this.tamanho = tamanho;
+    }
     
     public void setTamanho(int tamanho) {
         this.tamanho = tamanho;

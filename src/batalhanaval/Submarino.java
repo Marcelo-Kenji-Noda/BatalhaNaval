@@ -13,4 +13,7 @@ public class Submarino extends Navio{
     public Submarino(int tamanho, Casa casaInicial, Jogador jogador, Orientacao orientacao){
         super(2 ,casaInicial, jogador, orientacao);
     }
+    public Submarino(){
+        super(2);
+    }
 }

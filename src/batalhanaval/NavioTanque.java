@@ -9,10 +9,12 @@ package batalhanaval;
  * @author kenji
  */
 public class NavioTanque extends Navio{
-    /*4 Quadrados*/
-    int TAMANHO = 4;
-    
+    /*4 Quadrados*/ 
     public NavioTanque(int tamanho, Casa casaInicial, Jogador jogador, Orientacao orientacao){
-        super(4 ,casaInicial, jogador, orientacao);
+        super(tamanho ,casaInicial, jogador, orientacao);
+    }
+    
+    public NavioTanque(){
+        super(4);
     }
 }

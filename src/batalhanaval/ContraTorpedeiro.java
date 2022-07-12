@@ -13,4 +13,8 @@ public class ContraTorpedeiro extends Navio{
     public ContraTorpedeiro(int tamanho, Casa casaInicial, Jogador jogador, Orientacao orientacao){
         super(3 ,casaInicial, jogador, orientacao);
     }
+    
+    public ContraTorpedeiro(){
+        super(3);
+    }
 }

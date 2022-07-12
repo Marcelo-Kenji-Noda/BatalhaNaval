@@ -5,18 +5,25 @@
             <url>src/batalhanaval/BatalhaNaval.java</url>
             <bookmark id="1">
                 <name/>
-                <line>15</line>
+                <line>23</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/Casa.java</file>
+            <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/ContraTorpedeiro.java</file>
+            <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/PortaAviao.java</file>
             <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/BatalhaNaval.java</file>
             <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/Tabuleiro.java</file>
+            <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/NaviosEmJogo.java</file>
+            <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/Submarino.java</file>
+            <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/Navio.java</file>
+            <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/NavioTanque.java</file>
             <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/TelaInicial.java</file>
             <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/Game.java</file>
+            <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/Jogador.java</file>
+            <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/PreparationPhase.java</file>
         </group>
     </open-files>
 </project-private>
