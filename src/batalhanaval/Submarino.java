@@ -24,4 +24,9 @@ public class Submarino extends Navio{
     public String toString(){
         return "Submarino";
     }
+    
+    @Override
+    public int getId(){
+    return 3;
+    }
 }

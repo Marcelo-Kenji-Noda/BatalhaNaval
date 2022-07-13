@@ -26,4 +26,10 @@ public class ContraTorpedeiro extends Navio{
     public String toString(){
         return "Contra Torpedeiro";
     }
+    
+        
+    @Override
+    public int getId(){
+        return 2;
+    }
 }

@@ -108,13 +108,13 @@ public class NaviosEmJogo {
     public int getNumberOfNavios(int id){
         switch(id){
             case 0:
-                return 2 - listaPortaAvioes.size();
+                return listaPortaAvioes.size();
             case 1:
-                return 3-listaContraTorpedeiro.size();
+                return listaContraTorpedeiro.size();
             case 2:
-                return 4-listaNaviosTanque.size();
+                return listaNaviosTanque.size();
             case 3:
-                return 5 - listaSubmarino.size();
+                return listaSubmarino.size();
             default:
                 throw new AssertionError();
         }

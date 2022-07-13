@@ -60,4 +60,8 @@ public class Navio {
     public Orientacao getOrientacao() {
         return orientacao;
     }
+    
+    public int getId(){
+        return -1;
+    }
 }

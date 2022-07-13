@@ -38,10 +38,10 @@ public class Tabuleiro extends JPanel{
         this.setBackground(Color.GREEN);
         tabuleiro = new Casa[10][10];
         this.setLayout(new GridLayout(10, 10, 0, 0));
-        for(int i=0; i<10; i++){
-            for(int j=0; j<10; j++){
-                tabuleiro[i][j] = new Casa(i, j, TipoDeCasa.MAR);
-                this.add(tabuleiro[i][j]);
+        for(int col=0; col<10; col++){
+            for(int row=0; row<10; row++){
+                tabuleiro[row][col] = new Casa(row, col, TipoDeCasa.MAR);
+                this.add(tabuleiro[row][col]);
             }
         }
     }
@@ -49,7 +49,31 @@ public class Tabuleiro extends JPanel{
     public Casa[][] getTabuleiroCasas(){
         return this.tabuleiro;
     }
-    
+    public boolean validatePosicao(int tam, Orientacao orientacao, int row, int col){
+        boolean casaDisponivel = this.tabuleiro[row][col].getTipoDeCasa() == TipoDeCasa.MAR;
+        boolean tamanhoValido;
+        if(!casaDisponivel) return false;
+        
+        if(orientacao == Orientacao.HORIZONTAL){
+            tamanhoValido = (col + tam) <= 10;
+            if(!tamanhoValido) return false;
+            for(int i=0;i<10;i++){
+                if(this.tabuleiro[row][col+i].getTipoDeCasa() != TipoDeCasa.MAR){
+                    return false;
+                }
+            }
+        }else{
+            for (int i = 0; i < 10; i++) {
+                if (this.tabuleiro[row+i][col].getTipoDeCasa() != TipoDeCasa.MAR) {
+                    return false;
+                }
+            }
+            tamanhoValido = (row + tam) <= 10;
+            if(!tamanhoValido) return false;
+        }
+        
+        return true;
+    }
     public void placeNavio(int tam, Orientacao orientacao, Casa casainicial){
         totalMar -= tam;
         totalNavio += tam;
@@ -65,19 +89,23 @@ public class Tabuleiro extends JPanel{
                 tabuleiro[x0][y0+i].setTipoDeCasa(TipoDeCasa.NAVIO);
             }
         }
-
+        paintComponent(this.getGraphics());
     }
+    
+    public void update(){
+        this.paintComponent(this.getGraphics());
+    };
     
     @Override
     public void paintComponent(Graphics g){        
-        for(int i=0;i<10;i++){
-            for(int j=0; j<10; j++){
-                Casa casaAtual = tabuleiro[j][i];
+        for(int col=0;col<10;col++){
+            for(int row=0; row<10; row++){
+                Casa casaAtual = tabuleiro[row][col];
                 g.setColor(casaAtual.getColor());
-                g.fillRect(i * 50, j * 50, 50,
+                g.fillRect(row * 50, col * 50, 50,
                             50);
                 g.setColor(Color.BLACK);
-                g.drawRect(i * 50, j * 50, 50,
+                g.drawRect(row * 50, col * 50, 50,
                             50);
             }
         }

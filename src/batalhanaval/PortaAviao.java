@@ -24,4 +24,9 @@ public class PortaAviao extends Navio{
     public String toString(){
         return "Porta Avião";
     }
+    
+    @Override
+    public int getId(){
+        return 0;
+    }
 }

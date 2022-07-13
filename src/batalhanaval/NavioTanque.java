@@ -26,4 +26,9 @@ public class NavioTanque extends Navio{
     public String toString(){
         return "Navio Tanque";
     }
+    
+    @Override
+    public int getId(){
+        return 1;
+    }
 }
