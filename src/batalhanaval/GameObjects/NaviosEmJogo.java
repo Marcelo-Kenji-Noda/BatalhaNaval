@@ -12,6 +12,7 @@ import batalhanaval.GameObjects.PortaAviao;
 import batalhanaval.GameObjects.Navio;
 import batalhanaval.GameObjects.NavioTanque;
 import batalhanaval.GameObjects.Submarino;
+import batalhanaval.Utils.SharedJLabels;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,15 +36,14 @@ public class NaviosEmJogo {
         this.naviosEmJogo = new int[]{0,0,0,0};
         this.total = 0;
         this.vazio = true;
-    }
-    
-    
-    public void fillNavios(){
         listaPortaAvioes = new ArrayList<>();
         listaContraTorpedeiro = new ArrayList<>();
         listaNaviosTanque = new ArrayList<>();
         listaSubmarino = new ArrayList<>();
-
+    }
+    
+    
+    public void fillNavios(){
         /*Cria os navios*/
         for(int i=0;i<2;i++){
             listaPortaAvioes.add(new PortaAviao());
@@ -88,14 +88,14 @@ public class NaviosEmJogo {
                     System.out.println("");
                 }
             case 1:
-                if(!listaContraTorpedeiro.isEmpty()){
-                    return listaContraTorpedeiro.get(listaContraTorpedeiro.size()-1);
+                if(!listaNaviosTanque.isEmpty()){
+                    return listaNaviosTanque.get(listaNaviosTanque.size()-1);
                 }else{
                     System.out.println("");
                 }
             case 2:
-                if(!listaNaviosTanque.isEmpty()){
-                    return listaNaviosTanque.get(listaNaviosTanque.size()-1);
+                if(!listaContraTorpedeiro.isEmpty()){
+                    return listaContraTorpedeiro.get(listaContraTorpedeiro.size()-1);
                 }else{
                     System.out.println("");
                 }
@@ -129,11 +129,13 @@ public class NaviosEmJogo {
         switch(id){
             case 0:
                 if(listaPortaAvioes.size() < 2){
+                    System.out.println("Adicionado navio na bag atual");
                     listaPortaAvioes.add(new PortaAviao(navio));
                     total += 1;
                 }else{
                     System.out.println("Já está cheio!");
                 }
+                break;
             case 1:
                 if(listaContraTorpedeiro.size() < 3){
                     listaContraTorpedeiro.add(new ContraTorpedeiro(navio));
@@ -141,6 +143,7 @@ public class NaviosEmJogo {
                 }else{
                     System.out.println("Já está cheio!");
                 }
+                break;
             case 2:
                 if(listaNaviosTanque.size() < 4){
                     listaNaviosTanque.add(new NavioTanque(navio));
@@ -148,52 +151,59 @@ public class NaviosEmJogo {
                 }else{
                     System.out.println("Já está cheio!");
                 }
-            case 3:
+                break;
+            default:
                 if(listaSubmarino.size() < 5){
                     listaSubmarino.add(new Submarino(navio));
                     total += 1;
                 }else{
                     System.out.println("Já está cheio!");
                 }
-            default:
-                throw new AssertionError();
+                break;
         }
     }
     public void removeNavio(int id){
         switch (id) {
             case 0:
-            if (!listaPortaAvioes.isEmpty()){
-                listaPortaAvioes.remove(listaPortaAvioes.size()-1);
-                total -= 1;
-            }else{
-                System.out.println("Lista está vazia");
-            }
+                if (!listaPortaAvioes.isEmpty()){
+                    listaPortaAvioes.remove(listaPortaAvioes.size()-1);
+                    total -= 1;
+                }else{
+                    System.out.println("Lista está vazia");
+                }
+                break;
             case 1:
-            if (!listaContraTorpedeiro.isEmpty()){
-                listaContraTorpedeiro.remove(listaContraTorpedeiro.size()-1);
-                total -= 1;
-            }else{
-                System.out.println("Lista está vazia");
-            }
+                if (!listaContraTorpedeiro.isEmpty()){
+                    listaContraTorpedeiro.remove(listaContraTorpedeiro.size()-1);
+                    total -= 1;
+                }else{
+                    System.out.println("Lista está vazia");
+                }
+                break;
             case 2:
-            if (!listaNaviosTanque.isEmpty()){
-                listaNaviosTanque.remove(listaNaviosTanque.size()-1);
-                total -= 1;
-            }else{
-                System.out.println("Lista está vazia");
-            }
+                if (!listaNaviosTanque.isEmpty()){
+                    listaNaviosTanque.remove(listaNaviosTanque.size()-1);
+                    total -= 1;
+                }else{
+                    System.out.println("Lista está vazia");
+                }
+                break;
             case 3:
-            if (!listaSubmarino.isEmpty()){
-                listaSubmarino.remove(listaSubmarino.size()-1);
-                total -= 1;
-            }else{
-                System.out.println("Lista está vazia");
-            }
+                if (!listaSubmarino.isEmpty()){
+                    listaSubmarino.remove(listaSubmarino.size()-1);
+                    total -= 1;
+                }else{
+                    System.out.println("Lista está vazia");
+                }
+                break;
             default:
-               System.out.println("Erro ao adicionar");
+               System.out.println("Id encaminhado: "+id);
+               System.out.println("Erro ao remover");
+               break;
         }
     }
     
+
     public int getTotal(){
         return this.total;
     }

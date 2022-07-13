@@ -20,4 +20,12 @@ public enum Orientacao {
     public int getValor(){
         return valor;
     }
+    
+    public static Orientacao getOrientacao(int id){
+        if(id == 1){
+            return Orientacao.HORIZONTAL;
+        }else{
+            return Orientacao.VERTICAL;
+        }
+    }
 }

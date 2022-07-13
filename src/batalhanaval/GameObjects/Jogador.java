@@ -26,7 +26,14 @@ public class Jogador {
         tipoJogador = 1;
         this.tabuleiro = new Tabuleiro(this);
     }
-
+    
+    public Jogador(){
+        this.id = 0;
+        naviosEmJogo = new NaviosEmJogo();
+        tipoJogador = 1;
+        this.tabuleiro = new Tabuleiro(this);
+    }
+    
     public Tabuleiro getTabuleiro() {
         return tabuleiro;
     }
@@ -39,6 +46,13 @@ public class Jogador {
         return tipoJogador;
     }
     
+    public void clearNaviosEmJogo(){
+        naviosEmJogo = new NaviosEmJogo();
+    }
+    
+    public void setTabuleiro(Tabuleiro tabuleiro){
+        this.tabuleiro = tabuleiro;
+    }
     private boolean _validPosition(int id, Orientacao orientacao, int x, int y){
         int tam = naviosEmJogo.getNavio(id).getTamanho();
         int x0 = x;

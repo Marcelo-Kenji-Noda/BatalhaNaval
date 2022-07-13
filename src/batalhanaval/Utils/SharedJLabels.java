@@ -4,6 +4,7 @@
  */
 package batalhanaval.Utils;
 
+import batalhanaval.GameObjects.NaviosEmJogo;
 import java.awt.Font;
 import javax.swing.JLabel;
 
@@ -25,7 +26,32 @@ public class SharedJLabels {
             nSubmarinoLabel = new JLabel("Número de Submarinos: 5");
             orientacaoLabel = new JLabel("Orientação atual: Horizontal");
     }
-
+    
+    public JLabel getnNaviosLabelById(int id){
+        switch(id){
+            case 0:
+                return nPortaAviaoLabel;
+            case 1:
+                return nNavioTanqueLabel;
+            case 2:
+                return nContraTorpedeiroLabel;
+            default:
+                return nSubmarinoLabel;
+        }
+    }
+    
+    public void setnnNaviosByID(int id, int numberOfNavios){
+        switch(id){
+            case 0:
+                this.nPortaAviaoLabel.setText("Número de Porta aviões: "+numberOfNavios);
+            case 1:
+                this.nNavioTanqueLabel.setText("Número de Navios Tanque: "+numberOfNavios);
+            case 2:
+                this.nContraTorpedeiroLabel.setText("Número de Contra-torpedeiros: "+numberOfNavios);
+            default:
+                this.nSubmarinoLabel.setText("Número de Submarinos: "+numberOfNavios);
+        }
+    }
     public JLabel getorientacaoLabel() {
         return orientacaoLabel;
     }
@@ -80,5 +106,10 @@ public class SharedJLabels {
     public void setOrientacaoLabel(String text) {
         this.orientacaoLabel.setText(text);
     }
-    
+    public void updateLabel(NaviosEmJogo naviosEmJogo){
+        setnPortaAviaoLabelText("Número de Porta aviões: "+naviosEmJogo.getNumberOfNavios(0));
+        setnNavioTanqueLabelText("Número de Navio Tanque: "+naviosEmJogo.getNumberOfNavios(1));
+        setnContraTorpedeiroLabelText("Número de Contra-Torpedeiro: "+naviosEmJogo.getNumberOfNavios(2));
+        setnSubmarinoLabelText("Número de Submarinos: "+naviosEmJogo.getNumberOfNavios(3));
+    }
 }
