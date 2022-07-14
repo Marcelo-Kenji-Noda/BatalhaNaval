@@ -36,6 +36,7 @@ public class Casa extends JComponent implements MouseListener, MouseMotionListen
     private boolean mouseClicked = false;
     int tamanhoCasa = 36;
     private Color currentColor;
+    private int currentDisplayMode;
     
     private String conversorCharToNumber(int i) {
     return i > 0 && i < 27 ? String.valueOf((char)(i + 64)) : null;
@@ -54,6 +55,11 @@ public class Casa extends JComponent implements MouseListener, MouseMotionListen
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.tabuleiro = tabuleiro;
+        this.currentDisplayMode = 0;
+    }
+
+    public void setCurrentDisplayMode(int currentDisplayMode) {
+        this.currentDisplayMode = currentDisplayMode;
     }
     
     public Casa(int x, int y) {
@@ -106,27 +112,35 @@ public class Casa extends JComponent implements MouseListener, MouseMotionListen
 //        g.fillRect(xPos * 50, yPos * 50, this.getWidth(),
 //                    this.getHeight());
 //        g.setColor(Color.BLACK);
-    g.setColor(currentColor);
-    
-    g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-    g.setColor(Color.BLACK);
-    g.drawRect(this.getX(), this.getY(), this.getWidth(),
-                    this.getHeight());
-    if(tabuleiro.getCasaSelecionada()==this){
-        int[] triangleX = {this.getX()+5, this.getX()+5, this.getX()+48};
-        int[] triangleY = {this.getY()+4, this.getY()+46, this.getY()+25};
-        if(this.tabuleiro.getOrientacaoAtual() == Orientacao.VERTICAL){
-            triangleX[0] = this.getX() + 4;
-            triangleX[1] = this.getX() + 46;
-            triangleX[2] = this.getX() + 25;
-            
-            triangleY[0] = this.getY()+5;
-            triangleY[1] = this.getY()+5;
-            triangleY[2] = this.getY()+48;
-        }
-       
-       g.setColor(new Color(149, 55, 166));
-       g.fillPolygon(triangleX, triangleY, 3);
+    if(currentDisplayMode == 0){
+        g.setColor(currentColor);
+
+        g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        g.setColor(Color.BLACK);
+        g.drawRect(this.getX(), this.getY(), this.getWidth(),
+                this.getHeight());
+        if (tabuleiro.getCasaSelecionada() == this) {
+            int[] triangleX = {this.getX() + 5, this.getX() + 5, this.getX() + 48};
+            int[] triangleY = {this.getY() + 4, this.getY() + 46, this.getY() + 25};
+            if (this.tabuleiro.getOrientacaoAtual() == Orientacao.VERTICAL) {
+                triangleX[0] = this.getX() + 4;
+                triangleX[1] = this.getX() + 46;
+                triangleX[2] = this.getX() + 25;
+
+                triangleY[0] = this.getY() + 5;
+                triangleY[1] = this.getY() + 5;
+                triangleY[2] = this.getY() + 48;
+            }
+
+            g.setColor(new Color(149, 55, 166));
+            g.fillPolygon(triangleX, triangleY, 3);
+    }else{
+            g.setColor(currentColor);
+            g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+            g.setColor(Color.BLACK);
+            g.drawRect(this.getX(), this.getY(), this.getWidth(),
+            this.getHeight());
+    }
     }
     //System.out.println("X: "+this.getX() + " Y: " + this.getY() + " Width: "+this.getWidth() + " Height: "+ this.getHeight());
 
@@ -134,11 +148,11 @@ public class Casa extends JComponent implements MouseListener, MouseMotionListen
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if(tabuleiro.getCurrentDisplayMode() == 0){
         if(this.tipoCasa == TipoDeCasa.MAR){
             if (tabuleiro.getCasaSelecionada() == this) {
                 tabuleiro.resetCasaSelecionada();
                 this.update_casaColor(new Color(204, 203, 244));
-                tabuleiro.setisCasaSelecionada(false);
                 System.out.println("Casa desselecionada");
             } else {
                 tabuleiro.setCasaSelecionada(this);
@@ -146,10 +160,9 @@ public class Casa extends JComponent implements MouseListener, MouseMotionListen
                 this.update_casaColor(new Color(213, 128, 224));
                 System.out.println("Casa Selecionada: (" + this.xPos + "," + this.yPos + ")");
             }
-        
         }
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    }}
 
     @Override
     public void mousePressed(MouseEvent e) {      

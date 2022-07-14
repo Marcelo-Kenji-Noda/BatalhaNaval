@@ -197,13 +197,13 @@ public class PreparationPhase implements Runnable{
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Total" + naviosDisponiveis.getTotal());
                 System.out.println("Total" + jogador.getNaviosEmJogo().getTotal());
-                if(naviosDisponiveis.checkVazio()){
+//                if(naviosDisponiveis.checkVazio()){
                     Game newGame = new Game(jogador, new Jogador());
                     prepPhaseJframe.dispose();
                     newGame.run();
-                }else{
-                    System.out.println("Posicione todos os navios disponíveis");
-                }
+//                }else{
+//                    System.out.println("Posicione todos os navios disponíveis");
+//                }
                 }  
             });
             

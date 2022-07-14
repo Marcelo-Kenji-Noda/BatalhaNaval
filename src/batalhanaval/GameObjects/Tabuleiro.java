@@ -37,17 +37,19 @@ public class Tabuleiro extends JPanel{
     private Casa casaSelecionada;
     private boolean isCasaSelecionada;
     private Orientacao orientacaoAtual;
+    private int currentDisplayMode; // Se 0, então estamos na fase de preparação, se 1 estamos na fase de jogo;
+    
     public Tabuleiro(Jogador jogador){
         this.jogador = jogador;
         this.totalMar = 100;        
         this.totalNavio = 0;
-        this.totalAcerto=0;
+        this.totalAcerto = 0;
         this.totalErro = 0;
         this.casaAtual = new Casa(0,0,TipoDeCasa.MAR, this);
         this.casaSelecionada = new Casa(0,0,TipoDeCasa.MAR, this);
         this.isCasaSelecionada = false;
         this.orientacaoAtual = Orientacao.HORIZONTAL;
-        
+        this.currentDisplayMode = 0;
         this.setBorder(new EmptyBorder(10, 10, 10, 10));
         
         tabuleiro = new Casa[10][10];
@@ -60,11 +62,28 @@ public class Tabuleiro extends JPanel{
             }
         }
     }
+
+    public int getTotalAcerto() {
+        return totalAcerto;
+    }
     
     public Casa[][] getTabuleiroCasas(){
         return this.tabuleiro;
     }
+
+    public int getCurrentDisplayMode() {
+        return currentDisplayMode;
+    }
     
+    public void setCurrentDisplayMode(int currentDisplayMode) {
+        this.currentDisplayMode = currentDisplayMode;
+        
+        for(int row =0 ; row<10;row++){
+            for(int col=0;col<10;col++){
+                tabuleiro[row][col].setCurrentDisplayMode(currentDisplayMode);
+            }
+        }
+    }
     public void setCasaAtual(Casa casa){
         this.casaAtual = casa;        
     }

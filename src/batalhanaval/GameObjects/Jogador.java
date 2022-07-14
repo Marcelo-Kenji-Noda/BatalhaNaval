@@ -15,6 +15,7 @@ import batalhanaval.EnumerateClasses.TipoDeCasa;
 public class Jogador {
     private int id;
     private Tabuleiro tabuleiro;
+    private Tabuleiro tabuleiroAdversarioView;
     private NaviosEmJogo naviosEmJogo;
     private int tipoJogador;
     
@@ -25,12 +26,17 @@ public class Jogador {
         naviosEmJogo = new NaviosEmJogo();
         tipoJogador = 1;
         this.tabuleiro = new Tabuleiro(this);
+        this.tabuleiroAdversarioView = new Tabuleiro(this);
+    }
+
+    public Tabuleiro getTabuleiroAdversarioView() {
+        return tabuleiroAdversarioView;
     }
     
     public Jogador(){
         this.id = 0;
         naviosEmJogo = new NaviosEmJogo();
-        tipoJogador = 1;
+        tipoJogador = 0;
         this.tabuleiro = new Tabuleiro(this);
     }
     
