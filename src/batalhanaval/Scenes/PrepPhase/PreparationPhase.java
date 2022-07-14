@@ -159,6 +159,7 @@ public class PreparationPhase implements Runnable{
             this.setLayout(new GridLayout(2,6));
             orientationHButton = new JButton("Horizontal");
             orientationVButton = new JButton("Vertical");
+            
             returnNavioButton = new JButton("Retornar Navio");
             randomPlacementButton = new JButton("Posicionar aleatoriamente");
             clearBoardButton = new JButton("Limpar tabuleiro");
@@ -189,6 +190,7 @@ public class PreparationPhase implements Runnable{
             orientationHButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                    jogador.getTabuleiro().setOrientacaoAtual(Orientacao.HORIZONTAL);
                     orientacaoSelecionada = Orientacao.HORIZONTAL;
                     sharedLabels.setOrientacaoLabel("Orientação atual: Horizontal");
                 }  
@@ -207,6 +209,7 @@ public class PreparationPhase implements Runnable{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     orientacaoSelecionada = Orientacao.VERTICAL;
+                    jogador.getTabuleiro().setOrientacaoAtual(Orientacao.VERTICAL);
                     sharedLabels.setOrientacaoLabel("Orientação atual: Vertical");
                 }
             });
@@ -275,18 +278,20 @@ public class PreparationPhase implements Runnable{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("ID NAVIO: " +selectedNavio+"\nNAVIOS DISPONIVEIS: "+ naviosDisponiveis.getNumberOfNavios(selectedNavio.getId())
-                +"\nCasa X: "+xCoord+" Casa Y: "+yCoord+"\nOrientação: "+orientacaoSelecionada+"\n\n");
+                +"\nCasa X: "+jogador.getTabuleiro().getCasaSelecionada().getXPos()+" Casa Y: "+jogador.getTabuleiro().getCasaSelecionada().getYPos()+"\nOrientação: "+orientacaoSelecionada+"\n\n");
                 int selectedNavioid = selectedNavio.getId();
                 //System.out.println("ID Navio: "+selectedNavioid);
                     //Verifica se existem navios disponíveis
                     if(naviosDisponiveis.getNumberOfNavios(selectedNavio.getId()) > 0){
+                        
                         //System.out.println("N Navios Disponiveis = "+naviosDisponiveis.getNumberOfNavios(selectedNavio.getId()));
-                        if (!jogador.getTabuleiro().validatePosicao(selectedNavio.getTamanho(), orientacaoSelecionada, xCoord, yCoord)){
+                        if (!jogador.getTabuleiro().validatePosicao(selectedNavio.getTamanho(), orientacaoSelecionada, jogador.getTabuleiro().getCasaSelecionada().getXPos(), jogador.getTabuleiro().getCasaSelecionada().getYPos())){
                             //System.out.println("Posicao Invalida");
                             return;
                         }else{
                             try {
-                                jogador.getTabuleiro().placeNavio(selectedNavio.getTamanho(), orientacaoSelecionada, xCoord, yCoord);
+                                jogador.getTabuleiro().placeNavio(selectedNavio.getTamanho(), orientacaoSelecionada, jogador.getTabuleiro().getCasaSelecionada().getXPos(), jogador.getTabuleiro().getCasaSelecionada().getYPos());
+                                jogador.getTabuleiro().resetCasaSelecionada();
                                 
                             } catch (Exception err) {
                                 System.out.println("Erro ao posicionar no tabuleiro do jogador");
@@ -337,7 +342,7 @@ public class PreparationPhase implements Runnable{
                 if (naviosDisponiveis.getNumberOfNavios(0) > 0) {
                     selectedNavio = naviosDisponiveis.getNavio(0);
                 }
-                    sharedJLabels.setSelectedNavioLabelText("Navio Selecionado: " + selectedNavio.toString());
+                    sharedJLabels.setnPortaAviaoLabelText("Número de Porta-Aviões: " + naviosDisponiveis.getNumberOfNavios(0));
                 }  
             });
             navioTanqueButton.addActionListener(new ActionListener(){
@@ -346,7 +351,7 @@ public class PreparationPhase implements Runnable{
                 if (naviosDisponiveis.getNumberOfNavios(1) > 0) {
                     selectedNavio = naviosDisponiveis.getNavio(1);
                 }                    
-                    sharedJLabels.setSelectedNavioLabelText("Navio Selecionado: " + selectedNavio.toString());
+                    sharedJLabels.setnNavioTanqueLabelText("Número de Navios Tanques: " +  naviosDisponiveis.getNumberOfNavios(1));
                 }  
             });
                         
@@ -356,7 +361,7 @@ public class PreparationPhase implements Runnable{
                     if (naviosDisponiveis.getNumberOfNavios(2) > 0) {
                         selectedNavio = naviosDisponiveis.getNavio(2);
                     }
-                    sharedJLabels.setSelectedNavioLabelText("Navio Selecionado: " + selectedNavio.toString());
+                    sharedJLabels.setnContraTorpedeiroLabelText("Número de Contra Torpedeiros: " + naviosDisponiveis.getNumberOfNavios(2));
                 }  
             });
                                     
@@ -364,10 +369,10 @@ public class PreparationPhase implements Runnable{
             @Override
             public void actionPerformed(ActionEvent e) {
                     if(naviosDisponiveis.getNumberOfNavios(3) > 0){
-                        selectedNavio = naviosDisponiveis.getNavio(3);
+                        selectedNavio = naviosDisponiveis.getNavio(3);                        
                     }
                     
-                    sharedJLabels.setSelectedNavioLabelText("Navio Selecionado: " + selectedNavio.toString());
+                    sharedJLabels.setnSubmarinoLabelText("Número de Submarinos: " + naviosDisponiveis.getNumberOfNavios(3));
                 }  
             });
             this.add(portaAviaoButton);

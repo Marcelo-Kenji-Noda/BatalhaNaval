@@ -12,6 +12,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -27,13 +33,20 @@ public class Tabuleiro extends JPanel{
     private int totalNavio;
     private int totalAcerto;
     private int totalErro;
-
+    private Casa casaAtual;
+    private Casa casaSelecionada;
+    private boolean isCasaSelecionada;
+    private Orientacao orientacaoAtual;
     public Tabuleiro(Jogador jogador){
         this.jogador = jogador;
         this.totalMar = 100;        
         this.totalNavio = 0;
         this.totalAcerto=0;
         this.totalErro = 0;
+        this.casaAtual = new Casa(0,0,TipoDeCasa.MAR, this);
+        this.casaSelecionada = new Casa(0,0,TipoDeCasa.MAR, this);
+        this.isCasaSelecionada = false;
+        this.orientacaoAtual = Orientacao.HORIZONTAL;
         
         this.setBorder(new EmptyBorder(10, 10, 10, 10));
         
@@ -42,7 +55,7 @@ public class Tabuleiro extends JPanel{
         this.setSize(500, 500);
         for(int col=0; col<10; col++){
             for(int row=0; row<10; row++){
-                tabuleiro[row][col] = new Casa(row, col, TipoDeCasa.MAR);
+                tabuleiro[row][col] = new Casa(row, col, TipoDeCasa.MAR, this);
                 this.add(tabuleiro[row][col]);
             }
         }
@@ -52,6 +65,34 @@ public class Tabuleiro extends JPanel{
         return this.tabuleiro;
     }
     
+    public void setCasaAtual(Casa casa){
+        this.casaAtual = casa;        
+    }
+    
+    public void setisCasaSelecionada(boolean value){
+        this.isCasaSelecionada = value;
+    }
+    
+    public void resetCasaSelecionada(){
+        this.casaSelecionada = new Casa(0, 0);
+    }
+    public Casa getCasaSelecionada(){
+        return this.casaSelecionada;
+    }
+    public boolean getIsCasaSelecionada(){
+        return this.isCasaSelecionada;
+    }
+    public void setCasaSelecionada(Casa casa){
+        this.casaSelecionada = casa;
+    }
+    
+    public Orientacao getOrientacaoAtual(){
+        return this.orientacaoAtual;
+    }
+    
+    public void setOrientacaoAtual(Orientacao orientacao){
+        this.orientacaoAtual = orientacao;
+    }
     public void clearTabuleiro(){
         this.totalMar = 100;        
         this.totalNavio = 0;

@@ -44,12 +44,16 @@ public class SharedJLabels {
         switch(id){
             case 0:
                 this.nPortaAviaoLabel.setText("Número de Porta aviões: "+numberOfNavios);
+                break;
             case 1:
                 this.nNavioTanqueLabel.setText("Número de Navios Tanque: "+numberOfNavios);
+                break;
             case 2:
                 this.nContraTorpedeiroLabel.setText("Número de Contra-torpedeiros: "+numberOfNavios);
+                break;
             default:
                 this.nSubmarinoLabel.setText("Número de Submarinos: "+numberOfNavios);
+                break;
         }
     }
     public JLabel getorientacaoLabel() {
