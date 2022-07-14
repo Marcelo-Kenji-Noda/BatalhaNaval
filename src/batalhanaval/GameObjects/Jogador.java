@@ -86,6 +86,13 @@ public class Jogador {
         return true;
     }
     
+    public void addNavioToPlayer(int navio_type, Orientacao orientacao, NaviosEmJogo naviosDisponiveis){
+        //Move navio da bag de disponíveis para a bag do jogador
+        Navio navio_aux = naviosDisponiveis.getNavio(navio_type);
+        this.getNaviosEmJogo().addNavio(navio_type, navio_aux);
+        naviosDisponiveis.removeNavio(navio_type);
+    }
+    
     public int placeNavio(int id, Orientacao orientacao, int x, int y){
         if(_validPosition(id, orientacao, x, y)){
             tabuleiro.placeNavio(id, orientacao, x, y);

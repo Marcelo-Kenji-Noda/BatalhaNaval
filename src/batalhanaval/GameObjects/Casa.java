@@ -112,13 +112,13 @@ public class Casa extends JComponent implements MouseListener, MouseMotionListen
 //        g.fillRect(xPos * 50, yPos * 50, this.getWidth(),
 //                    this.getHeight());
 //        g.setColor(Color.BLACK);
-    if(currentDisplayMode == 0){
         g.setColor(currentColor);
 
         g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         g.setColor(Color.BLACK);
         g.drawRect(this.getX(), this.getY(), this.getWidth(),
                 this.getHeight());
+    if(currentDisplayMode == 0){
         if (tabuleiro.getCasaSelecionada() == this) {
             int[] triangleX = {this.getX() + 5, this.getX() + 5, this.getX() + 48};
             int[] triangleY = {this.getY() + 4, this.getY() + 46, this.getY() + 25};
@@ -134,12 +134,6 @@ public class Casa extends JComponent implements MouseListener, MouseMotionListen
 
             g.setColor(new Color(149, 55, 166));
             g.fillPolygon(triangleX, triangleY, 3);
-    }else{
-            g.setColor(currentColor);
-            g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-            g.setColor(Color.BLACK);
-            g.drawRect(this.getX(), this.getY(), this.getWidth(),
-            this.getHeight());
     }
     }
     //System.out.println("X: "+this.getX() + " Y: " + this.getY() + " Width: "+this.getWidth() + " Height: "+ this.getHeight());

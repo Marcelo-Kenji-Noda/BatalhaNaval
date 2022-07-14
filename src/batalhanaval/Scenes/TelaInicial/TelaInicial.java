@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package batalhanaval.Scenes;
+package batalhanaval.Scenes.TelaInicial;
 
 import batalhanaval.Scenes.PrepPhase.PreparationPhase;
 import java.awt.Dimension;
@@ -27,24 +27,27 @@ public class TelaInicial implements Runnable{
         //JFrame Iniciar
         final JFrame telaInicial = new JFrame("Batalha Naval Iniciar"); 
         
-        //JPanel Iniciar
+        //JPanel Painal de botões
         JPanel buttonPanel = new JPanel();
         
-        //Buttons Configs
+        //Inicializando os botões
         singlePlayerButton = new JButton("Single Player");
         multiPlayerButton = new JButton("Multi player");
         quitButton = new JButton("Sair");
                
         //Button Actions
+        //Inicia a fase de preparação
         singlePlayerButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*Inicia a fase de preparação e feecha a tela inicial*/
+                //Cria o modo de preparação para o jogador 0  no modo 1 (single player)
                 PreparationPhase prepPhase = new PreparationPhase(1, 0);
                 telaInicial.dispose();
                 prepPhase.run();
             }  
         });
+        
+        //Inicia a fase de preparação
         multiPlayerButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -52,17 +55,21 @@ public class TelaInicial implements Runnable{
                 System.exit(0);
             }  
         });
+        
+        //Finaliza o programa
         quitButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }  
         });
-        //JPanel Buttons Configs
+        
+        //Adiciona os botões ao painel
         buttonPanel.add(singlePlayerButton);
         buttonPanel.add(multiPlayerButton);
         buttonPanel.add(quitButton);
         
+        //Layout e design do painel
         buttonPanel.setLayout(new GridLayout(3,1));
         buttonPanel.setBorder(new EmptyBorder(100,100,100,100));
         
@@ -71,9 +78,7 @@ public class TelaInicial implements Runnable{
         telaInicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         telaInicial.setSize(new Dimension(500,500));
         telaInicial.setResizable(false);
-        telaInicial.setVisible(true);
-        //telaInicial.pack();
-        
+        telaInicial.setVisible(true);        
     }
     
 }

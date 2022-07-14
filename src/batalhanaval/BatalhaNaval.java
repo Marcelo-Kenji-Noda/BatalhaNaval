@@ -4,7 +4,7 @@
  */
 package batalhanaval;
 
-import batalhanaval.Scenes.TelaInicial;
+import batalhanaval.Scenes.TelaInicial.TelaInicial;
 import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JFrame;
