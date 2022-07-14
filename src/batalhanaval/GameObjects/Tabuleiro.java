@@ -29,25 +29,27 @@ import javax.swing.border.EmptyBorder;
 public class Tabuleiro extends JPanel{
     private Casa[][] tabuleiro;
     private Jogador jogador;
+    
     private int totalMar;
     private int totalNavio;
     private int totalAcerto;
     private int totalErro;
-    private Casa casaAtual;
+    
+    private Casa casaMouseOver;
+    
     private Casa casaSelecionada;
-    private boolean isCasaSelecionada;
     private Orientacao orientacaoAtual;
     private int currentDisplayMode; // Se 0, então estamos na fase de preparação, se 1 estamos na fase de jogo;
     
+    //Construtor
     public Tabuleiro(Jogador jogador){
         this.jogador = jogador;
         this.totalMar = 100;        
         this.totalNavio = 0;
         this.totalAcerto = 0;
         this.totalErro = 0;
-        this.casaAtual = new Casa(0,0,TipoDeCasa.MAR, this);
+        this.casaMouseOver = new Casa(0,0,TipoDeCasa.MAR, this);
         this.casaSelecionada = new Casa(0,0,TipoDeCasa.MAR, this);
-        this.isCasaSelecionada = false;
         this.orientacaoAtual = Orientacao.HORIZONTAL;
         this.currentDisplayMode = 0;
         this.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -55,6 +57,8 @@ public class Tabuleiro extends JPanel{
         tabuleiro = new Casa[10][10];
         this.setLayout(new GridLayout(10, 10));
         this.setSize(500, 500);
+        
+        //Cria o tabuleiro
         for(int col=0; col<10; col++){
             for(int row=0; row<10; row++){
                 tabuleiro[row][col] = new Casa(row, col, TipoDeCasa.MAR, this);
@@ -63,18 +67,7 @@ public class Tabuleiro extends JPanel{
         }
     }
 
-    public int getTotalAcerto() {
-        return totalAcerto;
-    }
-    
-    public Casa[][] getTabuleiroCasas(){
-        return this.tabuleiro;
-    }
-
-    public int getCurrentDisplayMode() {
-        return currentDisplayMode;
-    }
-    
+    //Setters
     public void setCurrentDisplayMode(int currentDisplayMode) {
         this.currentDisplayMode = currentDisplayMode;
         
@@ -85,34 +78,37 @@ public class Tabuleiro extends JPanel{
             }
         }
     }
-    public void setCasaAtual(Casa casa){
-        this.casaAtual = casa;        
+    public void setCasaMouseOver(Casa casa){
+        this.casaMouseOver = casa;        
+    }
+    public void setCasaSelecionada(Casa casa) {
+        this.casaSelecionada = casa;
+    }
+    public void setOrientacaoAtual(Orientacao orientacao) {
+        this.orientacaoAtual = orientacao;
     }
     
-    public void setisCasaSelecionada(boolean value){
-        this.isCasaSelecionada = value;
+    //Getters
+    public int getTotalAcerto() {
+        return totalAcerto;
     }
-    
-    public void resetCasaSelecionada(){
-        this.casaSelecionada = new Casa(0, 0);
+    public Casa[][] getTabuleiroCasas(){
+        return this.tabuleiro;
     }
     public Casa getCasaSelecionada(){
         return this.casaSelecionada;
     }
-    public boolean getIsCasaSelecionada(){
-        return this.isCasaSelecionada;
-    }
-    public void setCasaSelecionada(Casa casa){
-        this.casaSelecionada = casa;
-    }
-    
     public Orientacao getOrientacaoAtual(){
         return this.orientacaoAtual;
     }
-    
-    public void setOrientacaoAtual(Orientacao orientacao){
-        this.orientacaoAtual = orientacao;
+    public int getCurrentDisplayMode() {
+        return currentDisplayMode;
     }
+    public void resetCasaSelecionada(){
+        this.casaSelecionada = new Casa(0, 0);
+    }
+    
+    //Limpa o tabuleiro
     public void clearTabuleiro(){
         this.totalMar = 100;        
         this.totalNavio = 0;
@@ -126,6 +122,7 @@ public class Tabuleiro extends JPanel{
         }
     }
     
+    //Verifica se o navio de tamanho tam, orientacao horizontal na posicao [row, col] pode ser posicionado
     public boolean validatePosicao(int tam, Orientacao orientacao, int row, int col){
         //System.out.println("Tipo de Casa: " + this.tabuleiro[row][col].getTipoDeCasa());
         boolean casaDisponivel = this.tabuleiro[row][col].getTipoDeCasa() == TipoDeCasa.MAR;
@@ -134,7 +131,7 @@ public class Tabuleiro extends JPanel{
         if(!casaDisponivel) return false;
         
         if(orientacao == Orientacao.HORIZONTAL){
-            tamanhoValido = (row + tam) < 10 && col < 10;
+            tamanhoValido = (row + tam-1) < 10 && col < 10;
             //System.out.println("Tamanho da Ultima casa: " + (row + tam));
             if(!tamanhoValido){
                 //System.out.println("Tamanho inválido Horizontal: " + (tam + row));
@@ -145,15 +142,13 @@ public class Tabuleiro extends JPanel{
                 }
             }
         }else{
-            tamanhoValido = (col + tam) < 10 && row < 10;
+            tamanhoValido = (col + tam-1) < 10 && row < 10;
             //System.out.println("Tamanho da Ultima casa: " + (col + tam));
-            if(!tamanhoValido){
-                //System.out.println("Tamanho inválido: " + (tam + col));
+            if(!tamanhoValido){                
                 return false;
             } 
             for (int i = 0; i < tam; i++) {
-                if (this.tabuleiro[row][col+i].getTipoDeCasa() != TipoDeCasa.MAR) {
-                    //System.out.println("Tamanho inválido Vertical: " + (tam + col));
+                if (this.tabuleiro[row][col+i].getTipoDeCasa() != TipoDeCasa.MAR) {                    
                     return false;
                 }
             }
@@ -161,6 +156,8 @@ public class Tabuleiro extends JPanel{
         
         return true;
     }
+    
+    //Posiciona o navio de tamanho tam, orientacao e casa inicial [x,y]
     public void placeNavio(int tam, Orientacao orientacao, int x, int y){        
         try {
             if(validatePosicao(tam,orientacao, x, y)){
@@ -177,16 +174,37 @@ public class Tabuleiro extends JPanel{
                         tabuleiro[x0][y0 + i].setTipoDeCasa(TipoDeCasa.NAVIO);
                     }
                 }
-                update();
+                updatePaint();
             }          
         } catch (Exception e) {
             System.out.println("Erro ao posicionar navio");
         }        
     }
-    
-    public void update(){
+        //Posiciona o navio de tamanho tam, orientacao e casa inicial [x,y]
+    public void placeNavioBot(int tam, Orientacao orientacao, int x, int y){        
         try {
-            //System.out.println("Entrou em update");
+            if(validatePosicao(tam,orientacao, x, y)){
+                totalMar -= tam;
+                totalNavio += tam;
+                int x0 = x;
+                int y0 = y;
+                if (orientacao == Orientacao.HORIZONTAL) {
+                    for (int i = 0; i < tam; i++) {
+                        tabuleiro[x0 + i][y0].setTipoDeCasa(TipoDeCasa.NAVIO);
+                    }
+                } else {
+                    for (int i = 0; i < tam; i++) {
+                        tabuleiro[x0][y0 + i].setTipoDeCasa(TipoDeCasa.NAVIO);
+                    }
+                }
+            }          
+        } catch (Exception e) {
+            System.out.println("Erro ao posicionar navio");
+        }        
+    }    
+    public void updatePaint(){
+        try {
+            //System.out.println("Entrou em updatePaint");
             this.paintComponent(this.getGraphics());
         } catch (Exception e) {
             e.printStackTrace();
@@ -194,9 +212,9 @@ public class Tabuleiro extends JPanel{
         }
         
     };
-    
     @Override
     public void paintComponent(Graphics g){
+        //Pinta cada casa individualmente
         for(int col=0;col<10;col++){
             for(int row=0; row<10; row++){
                 tabuleiro[row][col].paintComponent(g);

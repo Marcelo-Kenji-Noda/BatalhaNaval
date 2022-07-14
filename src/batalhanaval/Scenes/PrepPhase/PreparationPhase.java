@@ -30,6 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 /**
  *
@@ -42,6 +43,7 @@ public class PreparationPhase implements Runnable{
     
     private int mode;
     private Jogador jogador;
+    private Jogador bot;
     private NaviosEmJogo naviosDisponiveis;
     
     //Itens selecionados;
@@ -54,6 +56,7 @@ public class PreparationPhase implements Runnable{
     public PreparationPhase(int mode, int id_jogador) {
         this.mode = mode;
         this.jogador = new Jogador(id_jogador);
+        this.bot = new Jogador();
         
         //Inicia uma seleção default        
         this.naviosDisponiveis = new NaviosEmJogo();
@@ -63,7 +66,7 @@ public class PreparationPhase implements Runnable{
         this.selectedCasa = new Casa(xSelected,ySelected);
         
         //Inicia os navios disponíveis com todos os navios
-        this.naviosDisponiveis.fillNavios(); 
+        this.naviosDisponiveis.fillNaviosEmJogo(); 
         selectedNavio = naviosDisponiveis.getNavio(0);
 
                
@@ -86,6 +89,7 @@ public class PreparationPhase implements Runnable{
         //Recebe SharedLabels
         //Construtor        
         public TextPanel(SharedJLabels sharedLabels){
+            this.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
             /*Painel com os textos*/
             //Variáveis que armazenam a quantidade de cada tipo de navio disponível
             npiecesLeft = naviosDisponiveis.getTotal();            
@@ -101,28 +105,38 @@ public class PreparationPhase implements Runnable{
 
             c.gridx = 0;
             c.gridy = 0;
-            c.gridwidth = 2;
+            c.gridwidth = 4;            
             this.add(sharedLabels.getSelectedNavioLabel(), c);
             c.gridx = 0;
             c.gridy = 1;
-            c.gridwidth = 1;
+            c.gridwidth = 2;
             this.add(sharedLabels.getPiecesLeftTotalLabel(),c);
-            c.gridx = 1;
+            c.gridx = 2;
             c.gridy = 1;
-            c.gridwidth = 1;
+            c.gridwidth = 2;
             this.add(sharedLabels.getorientacaoLabel(), c);
             c.gridx = 0;
             c.gridy = 2;
             c.gridwidth = 1;
+            
+            sharedLabels.getnPortaAviaoLabel().setBorder(BorderFactory.createEmptyBorder(0, 10,0 , 10));
             this.add(sharedLabels.getnPortaAviaoLabel(),c);
+            
             c.gridx = 1;
             c.gridy = 2;
+            
+            sharedLabels.getnNavioTanqueLabel().setBorder(BorderFactory.createEmptyBorder(0, 10,0 , 10));
             this.add(sharedLabels.getnNavioTanqueLabel(),c);
-            c.gridx = 0;
-            c.gridy = 3;
+            
+            c.gridx = 2;
+            c.gridy = 2;
+            sharedLabels.getnContraTorpedeiroLabel().setBorder(BorderFactory.createEmptyBorder(0, 10,0 , 10));
             this.add(sharedLabels.getnContraTorpedeiroLabel(),c);
-            c.gridx = 1;
-            c.gridy = 3;
+            
+            c.gridx = 3;
+            c.gridy = 2;
+            
+            sharedLabels.getnSubmarinoLabel().setBorder(BorderFactory.createEmptyBorder(0, 10,0 , 10));
             this.add(sharedLabels.getnSubmarinoLabel(),c);
 
             this.setVisible(true);
@@ -145,9 +159,7 @@ public class PreparationPhase implements Runnable{
         //Função auxiliar para pegar o Label do Navio atual
         public JLabel getCurrentJLabel(){
             return selectedNavioLabel;
-        }
-        
-        
+        }   
     };
     
     //Painel com botões
@@ -204,10 +216,9 @@ public class PreparationPhase implements Runnable{
             iniciarJogoButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("Total" + naviosDisponiveis.getTotal());
-                    System.out.println("Total" + jogador.getNaviosEmJogo().getTotal());
                 if(naviosDisponiveis.checkVazio()){
-                    Game newGame = new Game(jogador, new Jogador());
+                    Utils.placeNaviosRandomBot(bot);
+                    Game newGame = new Game(jogador, bot);
                     prepPhaseJframe.dispose();
                     newGame.run();
                 }else{
@@ -223,9 +234,9 @@ public class PreparationPhase implements Runnable{
                     jogador.getTabuleiro().clearTabuleiro();
                     jogador.clearNaviosEmJogo();
                     naviosDisponiveis = new NaviosEmJogo();
-                    naviosDisponiveis.fillNavios();
+                    naviosDisponiveis.fillNaviosEmJogo();
                     sharedLabels.updateLabel(naviosDisponiveis);
-                    jogador.getTabuleiro().update();
+                    jogador.getTabuleiro().updatePaint();
                 }
             });
 
@@ -240,23 +251,16 @@ public class PreparationPhase implements Runnable{
             //Posiciona o navio selecionado na casa selecionada, na orientação selecionada
             posicionarButton.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("ID NAVIO: " + selectedNavio + "\nNAVIOS DISPONIVEIS: " + naviosDisponiveis.getNumberOfNavios(selectedNavio.getId())
-                            + "\nCasa X: " + jogador.getTabuleiro().getCasaSelecionada().getXPos() + " Casa Y: " + jogador.getTabuleiro().getCasaSelecionada().getYPos() + "\nOrientação: " + orientacaoSelecionada + "\n\n");
+                public void actionPerformed(ActionEvent e) {                    
                     int selectedNavioid = selectedNavio.getId();
-                    //System.out.println("ID Navio: "+selectedNavioid);
                     //Verifica se existem navios disponíveis
-                    if (naviosDisponiveis.getNumberOfNavios(selectedNavio.getId()) > 0) {
-
-                        //System.out.println("N Navios Disponiveis = "+naviosDisponiveis.getNumberOfNavios(selectedNavio.getId()));
+                    if (naviosDisponiveis.getNumberOfNavios(selectedNavio.getId()) > 0) {                       
                         if (!jogador.getTabuleiro().validatePosicao(selectedNavio.getTamanho(), orientacaoSelecionada, jogador.getTabuleiro().getCasaSelecionada().getXPos(), jogador.getTabuleiro().getCasaSelecionada().getYPos())) {
-                            //System.out.println("Posicao Invalida");
-                            return;
+                            JOptionPane.showMessageDialog(null, "Navio selecionado não cabe na posição selecionada");
                         } else {
                             try {
                                 jogador.getTabuleiro().placeNavio(selectedNavio.getTamanho(), orientacaoSelecionada, jogador.getTabuleiro().getCasaSelecionada().getXPos(), jogador.getTabuleiro().getCasaSelecionada().getYPos());
                                 jogador.getTabuleiro().resetCasaSelecionada();
-
                             } catch (Exception err) {
                                 System.out.println("Erro ao posicionar no tabuleiro do jogador");
                             }
@@ -266,7 +270,6 @@ public class PreparationPhase implements Runnable{
                             } catch (Exception exc) {
                                 System.out.println("Erro de Adicionar navios na bag do jogador");
                             }
-
                             try {
                                 naviosDisponiveis.removeNavio(selectedNavioid);
                                 sharedLabels.setnnNaviosByID(selectedNavioid, naviosDisponiveis.getNumberOfNavios(selectedNavioid));
@@ -275,11 +278,10 @@ public class PreparationPhase implements Runnable{
                                 System.out.println("Não foi possível remover o navio selecionado");
                             }
 
-                            jogador.getTabuleiro().update();
-                        }
-                        //System.out.println("Clicou");
+                            jogador.getTabuleiro().updatePaint();
+                        }                        
                     } else {
-                        System.out.println("Número de navios do tipo selecionado é menor ou igual a 0");
+                        JOptionPane.showMessageDialog(null, "Número de navios do tipo selecionado é menor ou igual a 0");
                     }
                 }
             });
@@ -367,7 +369,6 @@ public class PreparationPhase implements Runnable{
         }
 
     }
-
     
     public void run(){
         //Inicializa uma variável do tipo SharedLabels para gerenciar os labels

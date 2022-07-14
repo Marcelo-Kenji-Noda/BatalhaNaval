@@ -41,7 +41,7 @@ public class TelaInicial implements Runnable{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Cria o modo de preparação para o jogador 0  no modo 1 (single player)
-                PreparationPhase prepPhase = new PreparationPhase(1, 0);
+            PreparationPhase prepPhase = new PreparationPhase(1, 0);
                 telaInicial.dispose();
                 prepPhase.run();
             }  

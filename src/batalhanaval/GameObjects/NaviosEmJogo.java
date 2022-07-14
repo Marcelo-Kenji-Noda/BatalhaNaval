@@ -23,7 +23,6 @@ public class NaviosEmJogo {
         2 - Contratorpedeiro
         3 - Submarino
     */
-    private int[] naviosEmJogo;
     private int total;
     private boolean vazio;
     
@@ -32,8 +31,8 @@ public class NaviosEmJogo {
     private List<NavioTanque> listaNaviosTanque;   
     private List<Submarino> listaSubmarino;    
 
+    //Construtor
     public NaviosEmJogo(){
-        this.naviosEmJogo = new int[]{0,0,0,0};
         this.total = 0;
         this.vazio = true;
         listaPortaAvioes = new ArrayList<>();
@@ -42,8 +41,8 @@ public class NaviosEmJogo {
         listaSubmarino = new ArrayList<>();
     }
     
-    
-    public void fillNavios(){
+    //Enche a bag com todos os navios
+    public void fillNaviosEmJogo(){
         /*Cria os navios*/
         for(int i=0;i<2;i++){
             listaPortaAvioes.add(new PortaAviao());
@@ -57,59 +56,48 @@ public class NaviosEmJogo {
         for(int i=0;i<5;i++){
             listaSubmarino.add(new Submarino());
         }
-                
-        for(int i=0;i<4;i++){
-            this.naviosEmJogo[i] = i+2;
-        }        
+                 
         this.total = 14;
         this.vazio = false;
     }
-    
-    public void derrubouNavio(int id){
-        if (naviosEmJogo[id] > 0){
-            naviosEmJogo[id] -= 1;
-            total -=  1;
-        }
-        else{
-            System.out.println("Não é possível derrubar o navio");
-        } 
-    }
-    
+      
     public boolean checkVazio(){
         return total == 0;
     }
     
+    //Retorna um navio contido na bag do tipo id, caso exista
     public Navio getNavio(int id){
         switch(id){
             case 0:
                 if(!listaPortaAvioes.isEmpty()){
                     return listaPortaAvioes.get(listaPortaAvioes.size()-1);
                 }else{
-                    System.out.println("");
+                   // System.out.println("Não há Porta-Aviões disponíveis");
                 }
             case 1:
                 if(!listaNaviosTanque.isEmpty()){
                     return listaNaviosTanque.get(listaNaviosTanque.size()-1);
                 }else{
-                    System.out.println("");
+                    //System.out.println("Não há Navios-Tanques disponíveis");
                 }
             case 2:
                 if(!listaContraTorpedeiro.isEmpty()){
                     return listaContraTorpedeiro.get(listaContraTorpedeiro.size()-1);
                 }else{
-                    System.out.println("");
+                    //System.out.println("Não há Contra-Torpedeiros disponíveis");
                 }
             case 3:
                 if(!listaSubmarino.isEmpty()){
                     return listaSubmarino.get(listaSubmarino.size()-1);
                 }else{
-                    System.out.println("");
+                    //System.out.println("Não há Submarinos disponíveis");
                 }
             default:
                 throw new AssertionError();
         }
     }
     
+    //Retorna a quantidade de navios do tipo id
     public int getNumberOfNavios(int id){
         switch(id){
             case 0:
@@ -118,18 +106,16 @@ public class NaviosEmJogo {
                 return listaContraTorpedeiro.size();
             case 2:
                 return listaNaviosTanque.size();
-            case 3:
-                return listaSubmarino.size();
             default:
-                throw new AssertionError();
+                return listaSubmarino.size();
         }
     }
         
+   //Adiciona um navio do tipo id a bag
     public void addNavio(int id, Navio navio){
         switch(id){
             case 0:
                 if(listaPortaAvioes.size() < 2){
-                    System.out.println("Adicionado navio na bag atual");
                     listaPortaAvioes.add(new PortaAviao(navio));
                     total += 1;
                 }else{
@@ -162,6 +148,8 @@ public class NaviosEmJogo {
                 break;
         }
     }
+    
+    //Remove um navio do tipo id da bag
     public void removeNavio(int id){
         switch (id) {
             case 0:
@@ -169,7 +157,7 @@ public class NaviosEmJogo {
                     listaPortaAvioes.remove(listaPortaAvioes.size()-1);
                     total -= 1;
                 }else{
-                    System.out.println("Lista está vazia");
+                    System.out.println("Não há Porta-aviões para remover");
                 }
                 break;
             case 1:
@@ -177,7 +165,7 @@ public class NaviosEmJogo {
                     listaContraTorpedeiro.remove(listaContraTorpedeiro.size()-1);
                     total -= 1;
                 }else{
-                    System.out.println("Lista está vazia");
+                    System.out.println("Não há Contra-Torpedeiros para remover");
                 }
                 break;
             case 2:
@@ -185,7 +173,7 @@ public class NaviosEmJogo {
                     listaNaviosTanque.remove(listaNaviosTanque.size()-1);
                     total -= 1;
                 }else{
-                    System.out.println("Lista está vazia");
+                    System.out.println("Não há Navios-Tanques para remover");
                 }
                 break;
             case 3:
@@ -193,7 +181,7 @@ public class NaviosEmJogo {
                     listaSubmarino.remove(listaSubmarino.size()-1);
                     total -= 1;
                 }else{
-                    System.out.println("Lista está vazia");
+                    System.out.println("Não há Submarinos para remover");
                 }
                 break;
             default:
@@ -203,7 +191,6 @@ public class NaviosEmJogo {
         }
     }
     
-
     public int getTotal(){
         return this.total;
     }

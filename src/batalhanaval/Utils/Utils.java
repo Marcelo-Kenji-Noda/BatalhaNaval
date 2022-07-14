@@ -15,7 +15,8 @@ import java.util.Random;
  *
  * @author kenji
  */
-public class Utils {    
+public class Utils {
+    private static NaviosEmJogo auxNaviosDisponiveis;    
     public static void placeNaviosRandom(NaviosEmJogo naviosDisponiveis, Jogador jogador, SharedJLabels sharedLabels){
         Random gerador = new Random();
         int id = 0;
@@ -39,7 +40,7 @@ public class Utils {
                     jogador.getNaviosEmJogo().addNavio(id, selectedNavio);
                     naviosDisponiveis.removeNavio(id);
                     sharedLabels.setnnNaviosByID(id, naviosDisponiveis.getNumberOfNavios(id));
-                    jogador.getTabuleiro().update();
+                    jogador.getTabuleiro().updatePaint();
                 }
                 catch(Exception e){ 
                 }
@@ -51,6 +52,43 @@ public class Utils {
         }
         sharedLabels.setPiecesLeftTotalLabelText("Total de Navios disponíveis: 0");
         
+        //Verifica se tem total de NavioTanque
+        //Verifica se tem total de ContraTorpedo
+        //Verifica se tem total de Submarino
+    }
+    
+    public static void placeNaviosRandomBot(Jogador jogador){
+        Random gerador = new Random();
+        int id = 0;
+        auxNaviosDisponiveis = new NaviosEmJogo();
+        auxNaviosDisponiveis.fillNaviosEmJogo();
+        
+        Navio selectedNavio;
+        
+        int xCoord, yCoord;        
+        
+        Orientacao orientacaoSelecionada;
+        
+        //Verifica se tem total de PortaAvioes
+        while(id < 4){
+            xCoord = gerador.nextInt(10);
+            yCoord = gerador.nextInt(10);
+            selectedNavio = auxNaviosDisponiveis.getNavio(id);
+            orientacaoSelecionada = Orientacao.getOrientacao(gerador.nextInt(2)+1);
+            
+            if(jogador.getTabuleiro().validatePosicao(selectedNavio.getTamanho(), orientacaoSelecionada, xCoord, yCoord)){
+                try{
+                    jogador.getTabuleiro().placeNavioBot(selectedNavio.getTamanho(), orientacaoSelecionada, xCoord, yCoord);
+                    jogador.getNaviosEmJogo().addNavio(id, selectedNavio);
+                    auxNaviosDisponiveis.removeNavio(id);
+                }
+                catch(Exception e){ 
+                }
+            }
+            if (auxNaviosDisponiveis.getNumberOfNavios(id) == 0) {
+                id += 1;
+            }
+        }
         //Verifica se tem total de NavioTanque
         //Verifica se tem total de ContraTorpedo
         //Verifica se tem total de Submarino

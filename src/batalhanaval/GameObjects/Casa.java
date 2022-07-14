@@ -4,6 +4,7 @@
  */
 package batalhanaval.GameObjects;
 
+import batalhanaval.EnumerateClasses.CustomColorPallete;
 import batalhanaval.EnumerateClasses.Orientacao;
 import batalhanaval.EnumerateClasses.TipoDeCasa;
 import java.awt.BasicStroke;
@@ -30,6 +31,7 @@ public class Casa extends JComponent implements MouseListener, MouseMotionListen
     private Graphics2D g;
     private int xPos;
     private int yPos;
+    
     private Tabuleiro tabuleiro;
     private TipoDeCasa tipoCasa;
     private boolean currentSelected;
@@ -38,10 +40,7 @@ public class Casa extends JComponent implements MouseListener, MouseMotionListen
     private Color currentColor;
     private int currentDisplayMode;
     
-    private String conversorCharToNumber(int i) {
-    return i > 0 && i < 27 ? String.valueOf((char)(i + 64)) : null;
-    };
-
+    //Constructors
     public Casa(int x, int y, TipoDeCasa tipoCasa, Tabuleiro tabuleiro) {
         //this.setPreferredSize(new Dimension(50,50));
         this.xPos = x;
@@ -57,67 +56,61 @@ public class Casa extends JComponent implements MouseListener, MouseMotionListen
         this.tabuleiro = tabuleiro;
         this.currentDisplayMode = 0;
     }
-
-    public void setCurrentDisplayMode(int currentDisplayMode) {
-        this.currentDisplayMode = currentDisplayMode;
-    }
-    
     public Casa(int x, int y) {
         this.xPos = x;
         this.yPos = y;
         this.tipoCasa = TipoDeCasa.MAR;
     }
+    
+    //Setters
     public void setTipoDeCasa(TipoDeCasa tipodeCasa){
         this.tipoCasa = tipodeCasa;
         if (this.tipoCasa == TipoDeCasa.ACERTO){
-           currentColor = new Color(228,83,83);          
+           currentColor = CustomColorPallete.ACERTO.color;     
         }else if(this.tipoCasa == TipoDeCasa.ERRO){
-           currentColor = new Color(129,129,129);            
+           currentColor = CustomColorPallete.ERRO.color;
         }else if(this.tipoCasa == TipoDeCasa.NAVIO){
-           currentColor = new Color(248,198,72);            
+           currentColor = CustomColorPallete.NAVIO.color;
         }else{
-            currentColor = new Color(204, 203, 244);     
+            currentColor = CustomColorPallete.MAR.color;
         }
     }
-    
     public void setCasa(int x, int y){
         this.xPos = x;
         this.yPos = y;
     }
+    public void setCurrentSelected(boolean value){
+        this.currentSelected = value;
+    }
+    public void setCurrentDisplayMode(int currentDisplayMode) {
+        this.currentDisplayMode = currentDisplayMode;
+    }
     
+    //Getters
     public int getXPos(){
         return this.xPos;
-    };
-    
+    };    
     public int getYPos(){
         return this.yPos;
-    };
-    
+    };    
     public TipoDeCasa getTipoDeCasa(){
         return this.tipoCasa;
     }
     
-    public void setCurrentSelected(boolean value){
-        this.currentSelected = value;
-    }
-
     public void update_casaColor(Color c){
         this.currentColor = c;
         this.repaint();
     }
     @Override
     public void paintComponent(Graphics g){
-//        super.paintComponent(g);
-//        g.setColor(this.getColor());
-//        g.fillRect(xPos * 50, yPos * 50, this.getWidth(),
-//                    this.getHeight());
-//        g.setColor(Color.BLACK);
         g.setColor(currentColor);
 
         g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         g.setColor(Color.BLACK);
         g.drawRect(this.getX(), this.getY(), this.getWidth(),
                 this.getHeight());
+        
+    //Current Display Mode = Fase de preparação
     if(currentDisplayMode == 0){
         if (tabuleiro.getCasaSelecionada() == this) {
             int[] triangleX = {this.getX() + 5, this.getX() + 5, this.getX() + 48};
@@ -134,29 +127,26 @@ public class Casa extends JComponent implements MouseListener, MouseMotionListen
 
             g.setColor(new Color(149, 55, 166));
             g.fillPolygon(triangleX, triangleY, 3);
-    }
-    }
-    //System.out.println("X: "+this.getX() + " Y: " + this.getY() + " Width: "+this.getWidth() + " Height: "+ this.getHeight());
+    }}else{
+        //Current Display Mode = Fase de Jogo
+    }}
 
-    }
-
+    //Mouse Events
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(tabuleiro.getCurrentDisplayMode() == 0){
-        if(this.tipoCasa == TipoDeCasa.MAR){
-            if (tabuleiro.getCasaSelecionada() == this) {
-                tabuleiro.resetCasaSelecionada();
-                this.update_casaColor(new Color(204, 203, 244));
-                System.out.println("Casa desselecionada");
-            } else {
-                tabuleiro.setCasaSelecionada(this);
-                tabuleiro.setisCasaSelecionada(true);
-                this.update_casaColor(new Color(213, 128, 224));
-                System.out.println("Casa Selecionada: (" + this.xPos + "," + this.yPos + ")");
+        //Display Mode = Fase de preparação
+        if(tabuleiro.getCurrentDisplayMode() != 2){
+            if (this.tipoCasa == TipoDeCasa.MAR) {
+                if (tabuleiro.getCasaSelecionada() == this) {
+                    tabuleiro.resetCasaSelecionada();
+                    this.update_casaColor(CustomColorPallete.MAR.color);
+                } else {
+                    tabuleiro.setCasaSelecionada(this);
+                    this.update_casaColor(CustomColorPallete.SELECTED.color);
+                }
             }
         }
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }}
+    }
 
     @Override
     public void mousePressed(MouseEvent e) {      
@@ -168,19 +158,27 @@ public class Casa extends JComponent implements MouseListener, MouseMotionListen
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        if(tabuleiro.getCasaSelecionada() != this && this.tipoCasa == TipoDeCasa.MAR){
-           this.update_casaColor(new Color(150, 149, 194));
+        if(tabuleiro.getCurrentDisplayMode() != 2){
+            //Se for modo de Preparação
+            if(tabuleiro.getCasaSelecionada() != this && this.tipoCasa == TipoDeCasa.MAR){            
+               this.update_casaColor(CustomColorPallete.HOVER.color);
+            }        
+            this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            tabuleiro.setCasaMouseOver(this);
+        }else{
+            this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
-        
-        this.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        tabuleiro.setCasaAtual(this);
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        if(tabuleiro.getCasaSelecionada() != this && this.tipoCasa == TipoDeCasa.MAR){
-           this.update_casaColor(new Color(204, 203, 244)); 
-        }       
+        if(tabuleiro.getCurrentDisplayMode() != 2){
+            if (tabuleiro.getCasaSelecionada() != this && this.tipoCasa == TipoDeCasa.MAR) {
+                this.update_casaColor(new Color(204, 203, 244));
+            }
+        }
+     
     }
 
     @Override
