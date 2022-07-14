@@ -64,6 +64,10 @@ public class Casa extends JComponent implements MouseListener, MouseMotionListen
     
     //Setters
     public void setTipoDeCasa(TipoDeCasa tipodeCasa){
+        if(tipodeCasa == TipoDeCasa.ACERTO){
+            tabuleiro.addAcertos();
+            System.out.println("Total de Acertos: " +tabuleiro.getTotalAcerto());
+        }
         this.tipoCasa = tipodeCasa;
         if (this.tipoCasa == TipoDeCasa.ACERTO){
            currentColor = CustomColorPallete.ACERTO.color;     

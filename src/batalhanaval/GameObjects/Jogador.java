@@ -28,7 +28,7 @@ public class Jogador {
         this.tabuleiro = new Tabuleiro(this);
         
         this.tabuleiroAdversarioView = new Tabuleiro(this);        
-        this.tabuleiroAdversarioView.setCurrentDisplayMode(1);
+        this.tabuleiroAdversarioView.setCurrentDisplayMode(1, true);
     }
 
     public Tabuleiro getTabuleiroAdversarioView() {
@@ -40,6 +40,9 @@ public class Jogador {
         naviosEmJogo = new NaviosEmJogo();
         tipoJogador = 0;
         this.tabuleiro = new Tabuleiro(this);
+        
+        this.tabuleiroAdversarioView = new Tabuleiro(this);        
+        this.tabuleiroAdversarioView.setCurrentDisplayMode(1, false);
     }
     
     public Tabuleiro getTabuleiro() {

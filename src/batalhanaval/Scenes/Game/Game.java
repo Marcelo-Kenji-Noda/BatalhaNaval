@@ -8,6 +8,7 @@ import batalhanaval.EnumerateClasses.Orientacao;
 import batalhanaval.EnumerateClasses.TipoDeCasa;
 import batalhanaval.GameObjects.Casa;
 import batalhanaval.GameObjects.Jogador;
+import batalhanaval.Scenes.EndGame.EndGame;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -16,6 +17,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -95,36 +97,52 @@ public class Game implements Runnable{
             jogador1.getTabuleiroAdversarioView().getTabuleiroCasas()[casa.getXPos()][casa.getYPos()].setTipoDeCasa(resultado);
             //Atualiza
             jogador1.getTabuleiroAdversarioView().updatePaint();
-            if(id_atacante == 1){
-                this.currentPlayerTurn = 2;
-            }else{
-                this.currentPlayerTurn = 1;
-            }            
+            if(jogador1.getTabuleiroAdversarioView().getTotalAcerto() == 40){
+                EndGame endgamePanel = new EndGame(1);                
+                gameMainFrame.dispose();
+                endgamePanel.run();
+                return 0;
+            }
+            botRandomPlay(jogador2, jogador1,id_atacante);         
             return id_atacante;
         }else{
             System.out.println("Casa Invalida");
+            this.currentPlayerTurn = 1;
             return 0;
         }      
     }
     
     public void botRandomPlay(Jogador jogador_atacando, Jogador jogador_atacado,int id_atacante){       
-        while(true){
-            Casa casa = jogador_atacando.getTabuleiroAdversarioView().getCasaSelecionada();
+        Random gerador = new Random();
+        int xaux, yaux;
+        this.currentPlayerTurn = 2;
+        while(true){                        
+            xaux= gerador.nextInt(10);
+            yaux= gerador.nextInt(10);
+            Casa casa = new Casa(xaux, yaux);
+            
             if (isValidAtaque(casa, jogador_atacando)) {
             //Realiza o ataque
             TipoDeCasa resultado = getResultOfAtaque(casa, jogador_atacado);
-            
+            System.out.println("Casa atacada: ("+xaux+", "+yaux+")");
+            System.out.println("Resultado: "+resultado+"");
             jogador_atacando.getTabuleiroAdversarioView().getTabuleiroCasas()[casa.getXPos()][casa.getYPos()].setTipoDeCasa(resultado);
-            if (id_atacante == 1) {
-                this.currentPlayerTurn = 2;
-            } else {
-                this.currentPlayerTurn = 1;
+                        
+            jogador_atacado.getTabuleiro().getTabuleiroCasas()[casa.getXPos()][casa.getYPos()].setTipoDeCasa(resultado);
+            jogador_atacado.getTabuleiro().updatePaint();
+            if(jogador_atacando.getTabuleiroAdversarioView().getTotalAcerto() == 40){
+                EndGame endgamePanel = new EndGame(2);
+                gameMainFrame.dispose();
+                endgamePanel.run();
             }
+            this.currentPlayerTurn = 1;
+            break;
             }
         }
+        
     };
     public boolean isVitoria(Jogador jogador){
-        return jogador.getTabuleiroAdversarioView().getTotalAcerto() == 44;
+        return jogador.getTabuleiroAdversarioView().getTotalAcerto() == 40;
     }
     
     @Override
@@ -143,7 +161,7 @@ public class Game implements Runnable{
         jogadorAdversarioTabuleiroLabel  = BorderFactory.createTitledBorder("Tabuleiro Adversário");
         jogador1.getTabuleiroAdversarioView().setBorder(jogadorAdversarioTabuleiroLabel);
         
-        jogador1.getTabuleiro().setCurrentDisplayMode(2);
+        jogador1.getTabuleiro().setCurrentDisplayMode(2, true);
 
         //Divide os paineis
         JSplitPane splitPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jogador1.getTabuleiro(), jogador1.getTabuleiroAdversarioView());
@@ -152,22 +170,6 @@ public class Game implements Runnable{
         splitPanel2.setDividerLocation(60);
         
         //Adiciona os paineis aos frames
-        gameMainFrame.add(splitPanel2,BorderLayout.CENTER);
-        
-        /*Enquanto o jogo estiver ligado*/
-        while(gameIsActive){
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException ex) {
-                //Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if(currentPlayerTurn == 1){
-                gameIsActive = !isVitoria(jogador1);
-            }else{
-                botRandomPlay(jogador2);
-                gameIsActive = !isVitoria(jogador2);
-            }
-        }
-    }
-    
+        gameMainFrame.add(splitPanel2,BorderLayout.CENTER);                
+    }   
 }

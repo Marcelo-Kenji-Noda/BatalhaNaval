@@ -13,11 +13,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/GameObjects/NaviosEmJogo.java</file>
+            <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/Scenes/EndGame/EndGame.java</file>
+            <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/Scenes/TelaInicial/TelaInicial.java</file>
             <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/GameObjects/Jogador.java</file>
             <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/Scenes/Game/Game.java</file>
             <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/GameObjects/Tabuleiro.java</file>
             <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/Scenes/PrepPhase/PreparationPhase.java</file>
-            <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/Utils/Utils.java</file>
             <file>file:/C:/Users/kenji/OneDrive/Área%20de%20Trabalho/USP/POO/BatalhaNaval/BatalhaNaval/src/batalhanaval/GameObjects/Casa.java</file>
         </group>
     </open-files>

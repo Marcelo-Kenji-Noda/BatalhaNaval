@@ -13,7 +13,7 @@ import java.awt.Color;
 public enum CustomColorPallete {
     MAR(new Color(204, 203, 244)),
     NAVIO(new Color(248,198,72)),
-    ACERTO(new Color(228,83,83)),
+    ACERTO(new Color(69, 179, 57)),
     ERRO(new Color(129,129,129)),
     HOVER(new Color(150, 149, 194)),
     SELECTED(new Color(213, 128, 224)),

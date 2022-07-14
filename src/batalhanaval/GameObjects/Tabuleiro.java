@@ -68,13 +68,15 @@ public class Tabuleiro extends JPanel{
     }
 
     //Setters
-    public void setCurrentDisplayMode(int currentDisplayMode) {
+    public void setCurrentDisplayMode(int currentDisplayMode, boolean drawit) {
         this.currentDisplayMode = currentDisplayMode;
         
         for(int row =0 ; row<10;row++){
             for(int col=0;col<10;col++){
                 tabuleiro[row][col].setCurrentDisplayMode(currentDisplayMode);
-                tabuleiro[row][col].repaint();
+                if(drawit){
+                    tabuleiro[row][col].repaint();
+                }                
             }
         }
     }
@@ -87,7 +89,9 @@ public class Tabuleiro extends JPanel{
     public void setOrientacaoAtual(Orientacao orientacao) {
         this.orientacaoAtual = orientacao;
     }
-    
+    public void addAcertos(){
+        this.totalAcerto += 1;
+    }
     //Getters
     public int getTotalAcerto() {
         return totalAcerto;
