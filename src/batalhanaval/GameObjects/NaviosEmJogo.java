@@ -61,7 +61,7 @@ public class NaviosEmJogo {
         for(int i=0;i<4;i++){
             this.naviosEmJogo[i] = i+2;
         }        
-        this.total = 10;
+        this.total = 14;
         this.vazio = false;
     }
     

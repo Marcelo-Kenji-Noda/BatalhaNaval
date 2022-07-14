@@ -45,10 +45,11 @@ public class Utils {
                 }
 
             }
-            if (naviosDisponiveis.getNumberOfNavios(id) <= 0) {
+            if (naviosDisponiveis.getNumberOfNavios(id) == 0) {
                 id += 1;
             }
         }
+        sharedLabels.setPiecesLeftTotalLabelText("Total de Navios disponíveis: 0");
         
         //Verifica se tem total de NavioTanque
         //Verifica se tem total de ContraTorpedo

@@ -181,10 +181,6 @@ public class PreparationPhase implements Runnable{
             this.add(randomPlacementButton);
             this.add(clearBoardButton);
             
-            this.add(XcoordSpinnerLabel);                        
-            this.add(XcoordSpinner);
-            this.add(YcoordSpinnerLabel);
-            this.add(YcoordSpinner);
             this.add(iniciarJogoButton);
             
             orientationHButton.addActionListener(new ActionListener(){
@@ -199,9 +195,15 @@ public class PreparationPhase implements Runnable{
             iniciarJogoButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Total" + naviosDisponiveis.getTotal());
+                System.out.println("Total" + jogador.getNaviosEmJogo().getTotal());
+                if(naviosDisponiveis.checkVazio()){
                     Game newGame = new Game(jogador, new Jogador());
                     prepPhaseJframe.dispose();
                     newGame.run();
+                }else{
+                    System.out.println("Posicione todos os navios disponíveis");
+                }
                 }  
             });
             
@@ -231,49 +233,7 @@ public class PreparationPhase implements Runnable{
                     Utils.placeNaviosRandom(naviosDisponiveis, jogador, sharedLabels);
                 }
             });
-            
-            XcoordSpinner.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-                    char c = e.getKeyChar();
-                    if (((c < '0') || (c > '9'))) {
-                        e.consume();
-                    }
-                    try{
-                    //XcoordSpinner.setText("");
-                    //XcoordSpinner.setText(String.valueOf(c));
-                    jogador.getTabuleiro().getTabuleiroCasas()[xCoord][yCoord].setCurrentSelected(false);
-                    xCoord = Integer.parseInt(String.valueOf(c));
-                    jogador.getTabuleiro().getTabuleiroCasas()[xCoord][yCoord].setCurrentSelected(true);
-                    jogador.getTabuleiro().update();
-                    //System.out.println("Coord X:" + xCoord);
-                   }catch(Exception er){
-                    //System.out.println("Erro em x");
-                    xCoord = 0; 
-                   }                                        
-                }
-            });
-            
-            YcoordSpinner.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-                    char c = e.getKeyChar();
-                    if (((c < '0') || (c > '9')) && ((c != KeyEvent.VK_BACK_SPACE))) {
-                        e.consume();
-                    }
-                    try{
-                    jogador.getTabuleiro().getTabuleiroCasas()[xCoord][yCoord].setCurrentSelected(false);
-                    yCoord = Integer.parseInt(String.valueOf(c));
-                    jogador.getTabuleiro().getTabuleiroCasas()[xCoord][yCoord].setCurrentSelected(true);
-                    jogador.getTabuleiro().update();
-                    //System.out.println("Coord Y:" + yCoord);
-                   }catch(Exception er){
-                    //System.out.println("Erro em Y");
-                    yCoord = 0; 
-                   }                                        
-                }
-            });
-            
+                       
             posicionarButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -306,6 +266,7 @@ public class PreparationPhase implements Runnable{
                             try {
                                 naviosDisponiveis.removeNavio(selectedNavioid);
                                 sharedLabels.setnnNaviosByID(selectedNavioid, naviosDisponiveis.getNumberOfNavios(selectedNavioid));
+                                sharedLabels.setPiecesLeftTotalLabelText("Total de Navios disponíveis: "+naviosDisponiveis.getTotal());
                             } catch (Exception exc) {
                                 System.out.println("Não foi possível remover o navio selecionado");
                             }
@@ -342,6 +303,7 @@ public class PreparationPhase implements Runnable{
                 if (naviosDisponiveis.getNumberOfNavios(0) > 0) {
                     selectedNavio = naviosDisponiveis.getNavio(0);
                 }
+                    sharedJLabels.setSelectedNavioLabelText("Navio Selecionado: " + selectedNavio.toString());
                     sharedJLabels.setnPortaAviaoLabelText("Número de Porta-Aviões: " + naviosDisponiveis.getNumberOfNavios(0));
                 }  
             });
@@ -350,7 +312,8 @@ public class PreparationPhase implements Runnable{
             public void actionPerformed(ActionEvent e) {
                 if (naviosDisponiveis.getNumberOfNavios(1) > 0) {
                     selectedNavio = naviosDisponiveis.getNavio(1);
-                }                    
+                }
+                    sharedJLabels.setSelectedNavioLabelText("Navio Selecionado: " + selectedNavio.toString());
                     sharedJLabels.setnNavioTanqueLabelText("Número de Navios Tanques: " +  naviosDisponiveis.getNumberOfNavios(1));
                 }  
             });
@@ -361,6 +324,7 @@ public class PreparationPhase implements Runnable{
                     if (naviosDisponiveis.getNumberOfNavios(2) > 0) {
                         selectedNavio = naviosDisponiveis.getNavio(2);
                     }
+                    sharedJLabels.setSelectedNavioLabelText("Navio Selecionado: " + selectedNavio.toString());
                     sharedJLabels.setnContraTorpedeiroLabelText("Número de Contra Torpedeiros: " + naviosDisponiveis.getNumberOfNavios(2));
                 }  
             });
@@ -371,7 +335,7 @@ public class PreparationPhase implements Runnable{
                     if(naviosDisponiveis.getNumberOfNavios(3) > 0){
                         selectedNavio = naviosDisponiveis.getNavio(3);                        
                     }
-                    
+                    sharedJLabels.setSelectedNavioLabelText("Navio Selecionado: " + selectedNavio.toString());
                     sharedJLabels.setnSubmarinoLabelText("Número de Submarinos: " + naviosDisponiveis.getNumberOfNavios(3));
                 }  
             });

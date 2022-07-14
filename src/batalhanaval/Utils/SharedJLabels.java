@@ -115,5 +115,6 @@ public class SharedJLabels {
         setnNavioTanqueLabelText("Número de Navio Tanque: "+naviosEmJogo.getNumberOfNavios(1));
         setnContraTorpedeiroLabelText("Número de Contra-Torpedeiro: "+naviosEmJogo.getNumberOfNavios(2));
         setnSubmarinoLabelText("Número de Submarinos: "+naviosEmJogo.getNumberOfNavios(3));
+        setPiecesLeftTotalLabelText("Total de Navios disponíveis: " + naviosEmJogo.getTotal());
     }
 }
